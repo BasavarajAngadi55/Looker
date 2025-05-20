@@ -20,7 +20,7 @@ view: +order_items {
 
 view: +order_items {
   measure: Cumulative_Total_Sales {
-    description: "Average sale price of items sold"
+    description: "Cumulative total sales from items sold (also known as a running total)"
     type: running_total
     sql: ${TABLE}.sale_price ;;
     value_format_name: usd_0
