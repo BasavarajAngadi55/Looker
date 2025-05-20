@@ -17,3 +17,12 @@ view: +order_items {
     value_format_name: usd_0
   }
 }
+
+view: +order_items {
+  measure: Cumulative_Total_Sales {
+    description: "Average sale price of items sold"
+    type: running_total
+    sql: ${TABLE}.sale_price ;;
+    value_format_name: usd_0
+  }
+}
