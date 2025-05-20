@@ -28,15 +28,16 @@ view: +order_items {
   }
 }
 
+
+
 view: +order_items {
 measure: total_gross_revenue {
   description: "Total revenue from completed sales (cancelled and returned orders excluded)"
   type: sum
-  sql:
-    CASE
-      WHEN ${TABLE}.status NOT IN ('cancelled', 'returned') THEN ${TABLE}.sale_price
-      ELSE 0
-    END ;;
+  sql: ${TABLE}.sale_price ;;
+  filters: [
+    status: "-cancelled,-returned"
+  ]
   value_format_name: usd_0
 }
 }
