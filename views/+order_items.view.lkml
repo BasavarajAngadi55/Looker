@@ -34,7 +34,7 @@ measure: total_gross_revenue {
   type: sum
   sql:
     CASE
-      WHEN ${TABLE}.order_status NOT IN ('cancelled', 'returned') THEN ${TABLE}.sale_price
+      WHEN ${TABLE}.status NOT IN ('cancelled', 'returned') THEN ${TABLE}.sale_price
       ELSE 0
     END ;;
   value_format_name: usd_0
