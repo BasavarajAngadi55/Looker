@@ -11,7 +11,7 @@ view: +order_items {
 
 view: +order_items {
   measure: total_sale_price {
-    description: "Total sales from items sold"
+    description: "Average sale price of items sold"
     type: average
     sql: ${TABLE}.sale_price ;;
     value_format_name: usd_0
