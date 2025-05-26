@@ -43,14 +43,7 @@ view: +order_items{
     drill_fields: [products.category,products.brand]
     description: "Calculates the total gross margin amount by subtracting the total cost from the total gross revenue."
   }
-
-
-
-
-
-
-
-   }
+  }
 
 
 
