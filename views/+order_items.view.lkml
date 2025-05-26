@@ -77,4 +77,11 @@ view: +order_items{
     value_format_name: percent_2
     description: "Calculates the percentage of items returned out of the total items sold."
   }
+  measure: number_of_customers_returning_items {
+    type: count_distinct
+    sql: CASE WHEN ${order_items.status} = 'returned' THEN ${order_items.user_id} ELSE NULL END ;;
+    description: "Counts the number of customers who have returned items."
+  }
+
+
   }
