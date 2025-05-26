@@ -25,4 +25,4 @@ view: +order_items{
     drill_fields: [products.brand, products.category]
     description: "Calculates the total gross revenue by summing the sale prices of all items, excluding cancelled or returned items."
   }
-  }
+ }
