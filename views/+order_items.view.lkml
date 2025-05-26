@@ -47,3 +47,11 @@ measure: total_cost {
   description: "Calculates the total cost of inventory items."
 }
 }
+
+view: +order_items {
+measure: average_cost {
+  type: average
+  sql: ${inventory_items.cost} ;;
+  description: "Calculates the average cost of inventory items."
+}
+}
