@@ -70,4 +70,11 @@ view: +order_items{
     sql: CASE WHEN ${order_items.id} IS NOT NULL THEN ${order_items.id} ELSE NULL END ;;
     description: "Counts the number of distinct items sold."
   }
+
+  measure: item_return_rate {
+    type: number
+    sql: ${order_items.number_of_items_returned} / NULLIF(${order_items.num_items_sold}, 0) ;;
+    value_format_name: percent_2
+    description: "Calculates the percentage of items returned out of the total items sold."
+  }
   }
