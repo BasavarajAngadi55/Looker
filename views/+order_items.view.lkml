@@ -28,8 +28,6 @@ view: +order_items {
   }
 }
 
-
-
 view: +order_items {
 measure: total_gross_revenue {
   description: "Total revenue from completed sales (cancelled and returned orders excluded)"
@@ -39,5 +37,13 @@ measure: total_gross_revenue {
     status: "-cancelled,-returned"
   ]
   value_format_name: usd_0
+}
+}
+
+view: +order_items {
+measure: total_cost {
+  type: sum
+  sql: ${inventory_items.cost} ;;
+  description: "Calculates the total cost of inventory items."
 }
 }
