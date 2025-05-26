@@ -65,5 +65,9 @@ view: +order_items{
     drill_fields: [products.brand]
     description: "Counts the number of items that have been returned."
   }
-
+  measure: num_items_sold {
+    type: count_distinct
+    sql: CASE WHEN ${order_items.id} IS NOT NULL THEN ${order_items.id} ELSE NULL END ;;
+    description: "Counts the number of distinct items sold."
+  }
   }
