@@ -44,18 +44,21 @@ view: +order_items{
     description: "Calculates the total gross margin amount by subtracting the total cost from the total gross revenue."
   }
 
+  measure: average_gross_margin {
+    type: number
+    sql: CASE WHEN ${order_items.total_gross_revenue} IS NOT NULL THEN
+         (${order_items.total_gross_revenue} - ${order_items.total_cost}) / NULLIF(${order_items.total_gross_revenue}, 0)
+       ELSE NULL END ;;
+    value_format_name: usd
+    description: "Calculates the average gross margin as a percentage of total gross revenue."
+  }
+  measure: gross_margin_percentage {
+    type: number
+    sql: ${order_items.total_gross_margin_amount} / NULLIF(${order_items.total_gross_revenue}, 0) ;;
+    value_format_name: percent_2
+    drill_fields: [products.category, products.product_id]
+    description: "Calculates the gross margin percentage by dividing the total gross margin amount by the total gross revenue."
+  }
 
 
-
-
-
-
-   }
-
-
-
-
-
-
-
-
+  }
