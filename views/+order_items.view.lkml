@@ -59,6 +59,11 @@ view: +order_items{
     drill_fields: [products.category, products.product_id]
     description: "Calculates the gross margin percentage by dividing the total gross margin amount by the total gross revenue."
   }
-
+  measure: number_of_items_returned {
+    type: count_distinct
+    sql: ${status}='returned' ;;
+    drill_fields: [products.brand]
+    description: "Counts the number of items that have been returned."
+  }
 
   }
