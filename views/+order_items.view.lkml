@@ -1,57 +1,61 @@
 include: "/views/order_items.view"
+include: "/views/users.view"
 
-
-view: +order_items {
+view: +order_items{
   measure: total_sale_price {
-    description: "Total sales from items sold"
     type: sum
-    sql: ${TABLE}.sale_price ;;
-    value_format_name: usd_0
+    sql: ${sale_price} ;;
+    value_format_name:usd_0
   }
-}
-
-view: +order_items {
-  measure: Average_Sale_Price  {
-    description: "Average sale price of items sold"
+  measure: average_sale_price {
     type: average
-    sql: ${TABLE}.sale_price ;;
-    value_format_name: usd_0
+    sql: ${order_items.sale_price} ;;
+    drill_fields: [inventory_items.product_brand, inventory_items.cost]
+    description: "Calculates the average sale price of items."
   }
-}
-
-view: +order_items {
-  measure: Cumulative_Total_Sales {
-    description: "Cumulative total sales from items sold (also known as a running total)"
+  measure: cumulative_total_sales {
     type: running_total
     sql: ${order_items.total_sale_price} ;;
-    value_format_name: usd_0
+    value_format_name: usd
+    description: "Calculates the running total of sales revenue in USD."
   }
-}
+  measure: total_gross_revenue {
+    type: sum
+    sql: CASE WHEN ${order_items.status} NOT IN ('cancelled', 'returned') THEN ${order_items.sale_price} ELSE 0 END ;;
+    value_format_name: usd_0
+    drill_fields: [products.brand, products.category]
+    description: "Calculates the total gross revenue by summing the sale prices of all items, excluding cancelled or returned items."
+  }
+  measure: total_cost {
+    type: sum
+    sql: ${inventory_items.cost} ;;
+    description: "Calculates the total cost of inventory items."
+  }
+  measure: average_cost {
+    type: average
+    sql: ${inventory_items.cost} ;;
+    description: "Calculates the average cost of inventory items."
+  }
+  measure: total_gross_margin_amount {
+    type: number
+    sql: ${order_items.total_gross_revenue} - ${order_items.total_cost} ;;
+    value_format_name: usd
+    drill_fields: [products.category,products.brand]
+    description: "Calculates the total gross margin amount by subtracting the total cost from the total gross revenue."
+  }
 
-view: +order_items {
-measure: total_gross_revenue {
-  description: "Total revenue from completed sales (cancelled and returned orders excluded)"
-  type: sum
-  sql: ${TABLE}.sale_price ;;
-  filters: [
-    status: "-cancelled,-returned"
-  ]
-  value_format_name: usd_0
-}
-}
 
-view: +order_items {
-measure: total_cost {
-  type: sum
-  sql: ${inventory_items.cost} ;;
-  description: "Calculates the total cost of inventory items."
-}
-}
 
-view: +order_items {
-measure: average_cost {
-  type: average
-  sql: ${inventory_items.cost} ;;
-  description: "Calculates the average cost of inventory items."
-}
-}
+
+
+
+
+   }
+
+
+
+
+
+
+
+
