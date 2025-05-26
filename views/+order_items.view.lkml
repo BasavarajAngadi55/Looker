@@ -82,6 +82,18 @@ view: +order_items{
     sql: CASE WHEN ${order_items.status} = 'returned' THEN ${order_items.user_id} ELSE NULL END ;;
     description: "Counts the number of customers who have returned items."
   }
+  measure: percent_of_users_with_returns {
+    type: percent_of_total
+    sql: ${order_items.number_of_customers_returning_items} / ${users.count} ;;
+    value_format_name: percent_2
+    description: "Calculates the percentage of users who have returned items out of the total number of users."
+  }
 
-
+  measure: average_spend_per_customer {
+    type: number
+    sql: ${order_items.total_sale_price} / NULLIF(${users.count}, 0) ;;
+    value_format_name: usd_0
+    description: "Calculates the average spend per customer in USD."
+    drill_fields: [products.brand, products.category]
+  }
   }
