@@ -1,6 +1,6 @@
 connection: "looker_partner_demo"
 
-# include all the views
+# include all the viewssssssss
 include: "/views/**/*.view.lkml"
 
 datagroup: testb_default_datagroup {
